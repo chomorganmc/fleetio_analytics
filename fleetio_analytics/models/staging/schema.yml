@@ -1,0 +1,52 @@
+version: 2
+
+models:
+  - name: stg_leads
+    description: One row per lead.
+    columns:
+      - name: lead_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_contacts
+    description: One row per converted lead.
+    columns:
+      - name: contact_id
+        tests:
+          - unique
+          - not_null
+      - name: lead_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_leads')
+              field: lead_id
+      - name: account_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_accounts')
+              field: account_id
+
+  - name: stg_accounts
+    description: One row per converted lead.
+    columns:
+      - name: account_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_opportunities
+    description: One row per converted lead.
+    columns:
+      - name: opportunity_id
+        tests:
+          - unique
+          - not_null
+      - name: account_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_accounts')
+              field: account_id

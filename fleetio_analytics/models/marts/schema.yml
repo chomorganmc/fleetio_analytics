@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: fct_leads
+    description: >
+      One row per lead, including those that never converted.
+      converted_at is the timestamp I'd use for conversion volume
+      at day / week / month grains. is_converted is for conversion rate calculations.
+    columns:
+      - name: lead_id
+        tests:
+          - unique
+          - not_null
+
+  - name: fct_opportunities
+    description: >
+      One row per opportunity, with lead and account fields joined on.
+      Win rate is among closed rows; open is its own distinct status.
+    columns:
+      - name: opportunity_id
+        tests:
+          - unique
+          - not_null
